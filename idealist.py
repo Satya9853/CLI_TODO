@@ -17,9 +17,10 @@
 import click
 from database import connectDB
 import terminaltables
+from click_help_colors import HelpColorsGroup, HelpColorsCommand
 
 
-@click.group()
+@click.group(cls=HelpColorsGroup, help_headers_color="yellow", help_options_color="green")
 @click.version_option(prog_name="idealist", version="0.01")
 def main():
     """Idealist Cli"""
@@ -46,7 +47,7 @@ def add_idea(title, detail, status):
 @main.command()
 @click.option("--title", "-t", prompt=True)
 def view_idea(title):
-    """Get idea by Title | Detail | Status"""
+    """Get idea by Title """
     click.secho(f"\n\nSearched for Title::{title}\n\n", fg="green")
     result = connectDB.get_single_idea_by_title(title)
     table = terminaltables.AsciiTable(result)
